@@ -1,4 +1,4 @@
-s3-file-uplodaer-js-sample
+s3-file-uploader-js-sample
 =========================
 
 Use S3 by JavaScript on Broweser.
