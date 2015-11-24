@@ -65,7 +65,7 @@
     var file = fileChooser.files[0];
     if (file) {
       results.innerHTML = '';
-
+      console.log(file);
       var params = {
         Bucket: bucketId,
         Key: "private/" + file.name,
@@ -88,6 +88,7 @@
 <input type="text" id="filename-chooser" />
 <button id="download-button">Download to S3</button>
 <div id="results-download"></div>
+<img id="img-download"></div>
 <script type="text/javascript">
 (function() {
   var fileChooser = document.getElementById('filename-chooser');
@@ -102,19 +103,25 @@
         Bucket: bucketId,
         Key: "private/" + file,
       };
-      bucket.getObject(params, function (err, data) {
+      var requestGetObject = bucket.getObject(params, function (err, data) {
         if (err) {
           console.log(err);
         }
         if (data) {
           console.log(data);
-        }
+          var type = data.ContentType;
+          bucket.getSignedUrl('getObject', params, function(err, url) {
+           if (err) {
+            console.log(err);
+            } else {
+              results.innerHTML = '<a href="' + url + '"><pre>'
+                + file + '</pre></a>';
+              if (type.lastIndexOf("image/", 0) == 0) {
+                var img = document.getElementById("img-download");
+                img.src = url;
+              }
+          }
       });
-      bucket.getSignedUrl('getObject', params, function(err, url) {
-        if (err) {
-          console.log(err);
-        } else {
-          results.innerHTML = '<a href="' + url + '"><pre>' + file + '</pre></a>';
         }
       });
     } else {
@@ -127,4 +134,3 @@
 
 </body>
 </html>
-
