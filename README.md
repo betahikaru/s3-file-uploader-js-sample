@@ -1,4 +1,4 @@
-s3-file-uploder-js-sample
+s3-file-uplodaer-js-sample
 =========================
 
 ## AWS S3 CORS Settings
@@ -25,4 +25,3 @@ Example Setting
     </CORSRule>
 </CORSConfiguration>
 ```
-
